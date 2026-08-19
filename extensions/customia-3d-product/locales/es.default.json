@@ -1,0 +1,10 @@
+{
+  "customia3d": {
+    "required": "Obligatoria",
+    "select_photo": "Seleccionar foto",
+    "file_help": "JPG, PNG o WebP · máximo {{ size }} MB",
+    "selected_photo": "Fotografía seleccionada",
+    "replace_photo": "Cambiar foto",
+    "payment_notice": "La generación comienza únicamente después de confirmar el pago."
+  }
+}

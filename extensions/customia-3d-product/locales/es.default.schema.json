@@ -1,0 +1,14 @@
+{
+  "customia3d": {
+    "name": "CustomIA 3D",
+    "settings": {
+      "product": "Producto",
+      "form_selector": "Selector del formulario de producto",
+      "form_selector_info": "Déjalo vacío para detección automática. Úsalo si tu tema tiene más de un formulario de compra, por ejemplo #product-form-main.",
+      "heading": "Título",
+      "required": "Exigir foto antes de agregar al carrito",
+      "max_file_mb": "Tamaño máximo",
+      "proxy_path": "Ruta de la app"
+    }
+  }
+}

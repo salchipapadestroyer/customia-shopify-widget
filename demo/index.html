@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CustomIA 3D · Producto</title>
+    <link rel="stylesheet" href="/extension/customia-3d.css">
+    <style>
+      :root { color-scheme: light; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+      * { box-sizing: border-box; }
+      body { margin: 0; color: #18181b; background: #fff; }
+      header { height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(20px, 5vw, 72px); border-bottom: 1px solid #e5e5e8; }
+      .brand { color: #5530aa; font-size: 24px; font-weight: 800; }
+      nav { display: flex; gap: 26px; color: #48484e; font-size: 14px; }
+      main { width: min(1180px, calc(100% - 40px)); margin: 36px auto 80px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(340px, .85fr); gap: clamp(34px, 6vw, 78px); }
+      .product-image { width: 100%; aspect-ratio: 1; object-fit: contain; background: #efedf4; }
+      .details { padding-top: 8px; }
+      h1 { margin: 0 0 14px; font-size: clamp(34px, 5vw, 54px); line-height: 1.02; letter-spacing: 0; }
+      .rating { color: #d9a316; margin-bottom: 22px; }
+      .price { margin-bottom: 26px; font-size: 25px; font-weight: 760; }
+      fieldset { margin: 0 0 22px; padding: 0; border: 0; }
+      legend { margin-bottom: 9px; font-size: 14px; font-weight: 650; }
+      .options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .options label { min-height: 42px; display: grid; place-items: center; border: 1px solid #6a43bd; border-radius: 6px; color: #5a34aa; cursor: pointer; }
+      .options input { position: absolute; opacity: 0; }
+      .options label:has(input:checked) { color: #fff; background: #6639c1; }
+      .add { width: 100%; min-height: 52px; border: 0; border-radius: 6px; background: #19191d; color: #fff; font: inherit; font-weight: 720; cursor: pointer; }
+      .cart-status { min-height: 22px; margin-top: 12px; color: #24633f; font-size: 13px; }
+      @media (max-width: 780px) { nav { display: none; } main { grid-template-columns: 1fr; margin-top: 18px; } h1 { font-size: 38px; } }
+    </style>
+    <script>
+      const originalFetch = window.fetch.bind(window);
+      window.fetch = async (input, init) => {
+        const url = String(input);
+        if (url.includes("/apps/customia-3d/jobs")) {
+          return new Response(JSON.stringify({ jobId: "demo-job-paid-only-after-checkout", status: "AWAITING_PAYMENT" }), {
+            status: 201,
+            headers: { "Content-Type": "application/json" },
+          });
+        }
+        return originalFetch(input, init);
+      };
+    </script>
+    <script src="/extension/customia-3d.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <div class="brand">CustomIA</div>
+      <nav aria-label="Principal"><span>Inicio</span><span>Cojines</span><span>Termos</span><span>Playeras</span></nav>
+    </header>
+    <main>
+      <img class="product-image" src="/sample.jpg" alt="Mascota para producto personalizado">
+      <section class="details">
+        <h1>Figura 3D de tu mascota</h1>
+        <div class="rating">★★★★★ <span style="color:#555">4.9</span></div>
+        <div class="price">$ 799.00</div>
+        <form action="/cart/add" method="post" id="demo-product-form">
+          <input type="hidden" name="product-id" value="7816510832726">
+          <input type="hidden" name="id" value="44148956627030">
+          <fieldset>
+            <legend>Tamaño</legend>
+            <div class="options">
+              <label><input type="radio" name="size" value="10cm" checked>10 cm</label>
+              <label><input type="radio" name="size" value="15cm">15 cm</label>
+              <label><input type="radio" name="size" value="20cm">20 cm</label>
+            </div>
+          </fieldset>
+          <div
+            class="customia3d"
+            data-customia3d
+            data-product-id="7816510832726"
+            data-product-handle="figura-3d-mascota"
+            data-proxy-path="/apps/customia-3d"
+            data-form-selector="#demo-product-form"
+            data-required="true"
+            data-max-file-mb="15"
+          >
+            <div class="customia3d__header">
+              <label class="customia3d__label" for="demo-photo">Carga la foto de tu mascota</label>
+              <span class="customia3d__required">Obligatoria</span>
+            </div>
+            <div class="customia3d__picker">
+              <input class="customia3d__input" id="demo-photo" type="file" accept="image/jpeg,image/png,image/webp" data-customia3d-input>
+              <label class="customia3d__dropzone" for="demo-photo">
+                <span class="customia3d__dropzone-title">Seleccionar foto</span>
+                <span class="customia3d__dropzone-help">JPG, PNG o WebP · máximo 15 MB</span>
+              </label>
+            </div>
+            <div class="customia3d__selection" data-customia3d-selection hidden>
+              <img class="customia3d__preview" data-customia3d-preview alt="Fotografía seleccionada" width="72" height="72">
+              <div class="customia3d__selection-copy">
+                <strong data-customia3d-filename></strong>
+                <span data-customia3d-status role="status" aria-live="polite"></span>
+                <button class="customia3d__replace" type="button" data-customia3d-replace>Cambiar foto</button>
+              </div>
+            </div>
+            <p class="customia3d__error" data-customia3d-error role="alert" hidden></p>
+            <p class="customia3d__privacy">La generación comienza únicamente después de confirmar el pago.</p>
+          </div>
+          <button class="add" type="submit">Agregar al carrito</button>
+          <div class="cart-status" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+    </main>
+    <script>
+      document.querySelector("#demo-product-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        document.querySelector(".cart-status").textContent = "Personalización adjunta al carrito. La IA seguirá apagada hasta el pago.";
+      });
+    </script>
+  </body>
+</html>

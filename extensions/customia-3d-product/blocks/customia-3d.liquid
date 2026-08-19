@@ -1,0 +1,112 @@
+{% assign customia_product = block.settings.product | default: product %}
+
+<div
+  class="customia3d"
+  data-customia3d
+  data-product-id="{{ customia_product.id }}"
+  data-product-handle="{{ customia_product.handle | escape }}"
+  data-proxy-path="{{ block.settings.proxy_path | escape }}"
+  data-form-selector="{{ block.settings.form_selector | escape }}"
+  data-required="{{ block.settings.required }}"
+  data-max-file-mb="{{ block.settings.max_file_mb }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="customia3d__header">
+    <label class="customia3d__label" for="customia3d-photo-{{ block.id }}">
+      {{ block.settings.heading | escape }}
+    </label>
+    {% if block.settings.required %}
+      <span class="customia3d__required">{{ 'customia3d.required' | t }}</span>
+    {% endif %}
+  </div>
+
+  <div class="customia3d__picker">
+    <input
+      class="customia3d__input"
+      id="customia3d-photo-{{ block.id }}"
+      type="file"
+      accept="image/jpeg,image/png,image/webp"
+      data-customia3d-input
+    >
+
+    <label class="customia3d__dropzone" for="customia3d-photo-{{ block.id }}">
+      <span class="customia3d__dropzone-title">{{ 'customia3d.select_photo' | t }}</span>
+      <span class="customia3d__dropzone-help">{{ 'customia3d.file_help' | t: size: block.settings.max_file_mb }}</span>
+    </label>
+  </div>
+
+  <div class="customia3d__selection" data-customia3d-selection hidden>
+    <img
+      class="customia3d__preview"
+      data-customia3d-preview
+      alt="{{ 'customia3d.selected_photo' | t }}"
+      width="72"
+      height="72"
+    >
+    <div class="customia3d__selection-copy">
+      <strong data-customia3d-filename></strong>
+      <span data-customia3d-status role="status" aria-live="polite"></span>
+      <button class="customia3d__replace" type="button" data-customia3d-replace>
+        {{ 'customia3d.replace_photo' | t }}
+      </button>
+    </div>
+  </div>
+
+  <p class="customia3d__error" data-customia3d-error role="alert" hidden></p>
+  <p class="customia3d__privacy">{{ 'customia3d.payment_notice' | t }}</p>
+</div>
+
+{% schema %}
+{
+  "name": "t:customia3d.name",
+  "target": "section",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "stylesheet": "customia-3d.css",
+  "javascript": "customia-3d.js",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:customia3d.settings.product",
+      "autofill": true
+    },
+    {
+      "type": "text",
+      "id": "form_selector",
+      "label": "t:customia3d.settings.form_selector",
+      "info": "t:customia3d.settings.form_selector_info",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:customia3d.settings.heading",
+      "default": "Carga la foto de tu mascota"
+    },
+    {
+      "type": "checkbox",
+      "id": "required",
+      "label": "t:customia3d.settings.required",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "max_file_mb",
+      "label": "t:customia3d.settings.max_file_mb",
+      "min": 2,
+      "max": 20,
+      "step": 1,
+      "unit": "MB",
+      "default": 15
+    },
+    {
+      "type": "text",
+      "id": "proxy_path",
+      "label": "t:customia3d.settings.proxy_path",
+      "default": "/apps/customia-3d"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,141 @@
+.customia3d {
+  width: 100%;
+  margin-block: 18px;
+  color: rgb(var(--color-foreground, 24 24 27));
+  font-family: inherit;
+}
+
+.customia3d__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 9px;
+}
+
+.customia3d__label {
+  font-weight: 650;
+  font-size: 14px;
+}
+
+.customia3d__required {
+  color: #6540bd;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.customia3d__picker {
+  position: relative;
+}
+
+.customia3d__input {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.customia3d__dropzone {
+  min-height: 112px;
+  box-sizing: border-box;
+  display: grid;
+  place-content: center;
+  gap: 5px;
+  padding: 18px;
+  text-align: center;
+  border: 1px dashed #9b9ba5;
+  border-radius: 6px;
+  background: #fafafa;
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.customia3d__picker:hover .customia3d__dropzone,
+.customia3d__input:focus-visible + .customia3d__dropzone {
+  border-color: #6540bd;
+  background: #f7f3ff;
+}
+
+.customia3d__dropzone-title {
+  color: #5d35b1;
+  font-weight: 700;
+}
+
+.customia3d__dropzone-help,
+.customia3d__privacy {
+  color: #676770;
+  font-size: 12px;
+}
+
+.customia3d__selection {
+  min-height: 88px;
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #d8d8dd;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.customia3d__selection[hidden] {
+  display: none;
+}
+
+.customia3d__preview {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 4px;
+  background: #ededf0;
+}
+
+.customia3d__selection-copy {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.customia3d__selection-copy strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.customia3d__replace {
+  width: max-content;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #5d35b1;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.customia3d__error {
+  margin: 9px 0 0;
+  color: #a52b2b;
+  font-size: 13px;
+}
+
+.customia3d__privacy {
+  margin: 8px 0 0;
+  line-height: 1.4;
+}
+
+.customia3d[data-uploading="true"] .customia3d__selection {
+  opacity: 0.7;
+}
+
+@media (max-width: 480px) {
+  .customia3d__header {
+    align-items: flex-start;
+  }
+}
